@@ -1,0 +1,79 @@
+// LCD5110_Scrolling_Text 
+// Copyright (C)2015 Rinky-Dink Electronics, Henning Karlsen. All right reserved
+// web: http://www.RinkyDinkElectronics.com/
+//
+// This program is a demo of how to use print().
+//
+// This program requires a Nokia 5110 LCD module.
+//
+// It is assumed that the LCD module is connected to
+// the following pins using a levelshifter to get the
+// correct voltage to the module.
+//      SCK  - Pin 8
+//      MOSI - Pin 9
+//      DC   - Pin 10
+//      RST  - Pin 11
+//      CS   - Pin 12
+//ARDUINO HOCAM 5110 EKRANI KULLANIMI
+#include <LCD5110_Graph.h>
+
+LCD5110 myGLCD(8,9,10,11,12);
+extern uint8_t logo[];
+extern uint8_t you[];
+extern uint8_t SmallFont[];
+
+
+
+void setup()
+{
+  myGLCD.InitLCD();
+    myGLCD.setFont(SmallFont);
+  
+}
+
+void loop()
+{ 
+ myGLCD.drawRect(20,20,60,30);
+ 
+myGLCD.print("LOADING",20,10);
+
+for(int i=20;i<=60;i++)
+{
+ myGLCD.drawLine(i,20,i,30);
+ myGLCD.update();
+ delay(50);
+}
+myGLCD.invert(true);
+delay(500);
+myGLCD.invert(false);
+delay(500);
+myGLCD.invert(true);
+delay(500);
+myGLCD.invert(false);
+
+myGLCD.clrScr();
+delay(3000);
+
+myGLCD.drawBitmap(20, 0,logo, 73,48);
+
+myGLCD.update();
+myGLCD.invert(true);
+delay(500);
+myGLCD.invert(false);
+delay(500);
+myGLCD.invert(true);
+delay(500);
+myGLCD.invert(false);
+myGLCD.clrScr();
+myGLCD.update();
+myGLCD.drawBitmap(20, 0,you , 84, 45);
+
+for(int i =70;i>=-85;i--)
+{
+myGLCD.print("www.youtube.com/ArduinoHocam",i,40);
+delay(100);
+myGLCD.update();
+}
+delay(3000);
+myGLCD.clrScr();
+}
